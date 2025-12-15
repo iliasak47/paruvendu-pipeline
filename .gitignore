@@ -1,0 +1,74 @@
+############################
+# Secrets , credentials
+############################
+.env
+*.env
+
+airflow_config/.dbt/profiles.yml
+airflow_config/.dbt/.user.yml
+.dbt/
+profiles.yml
+
+############################
+# Airflow
+############################
+logs/
+airflow/logs/
+airflow_config/logs/
+dags/__pycache__/
+plugins/__pycache__/
+
+############################
+# dbt
+############################
+dags/dbt/target/
+dags/dbt/logs/
+dags/dbt/dbt_packages/
+
+############################
+# Data (NEVER commit data)
+############################
+data/
+*.csv
+*.parquet
+*.json
+*.html
+
+############################
+# Spark artifacts
+############################
+artifacts/
+
+############################
+# Python
+############################
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+############################
+# Notebooks 
+############################
+.ipynb_checkpoints/
+notebooks/
+
+############################
+# IDE / OS
+############################
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+############################
+# Others
+############################
+Plan_Autres/
+
+############################
+# Code not used
+############################
+src/

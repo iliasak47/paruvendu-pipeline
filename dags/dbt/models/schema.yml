@@ -1,0 +1,110 @@
+version: 2
+
+models:
+  - name: stg_paruvendu
+    description: >
+      Table de staging contenant les annonces extraites du site ParuVendu
+      pour la ville de Rouen. Données brutes nettoyées et typées.
+    columns:
+      - name: id_annonce
+        description: Identifiant unique de l'annonce (non unique à cause de l'historisation)
+        tests:
+          - not_null
+
+      - name: title
+        description: Titre de l’annonce
+
+      - name: price_eur
+        description: Loyer mensuel en euros
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: surface_m2
+        description: Surface du logement en mètres carrés
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 5
+
+      - name: nb_pieces
+        description: Nombre de pièces principales
+
+      - name: price_m2
+        description: Prix au mètre carré calculé
+        tests:
+          - not_null
+
+      - name: city
+        description: Ville (ici uniquement Rouen)
+
+      - name: description
+        description: Description textuelle de l’annonce
+
+      - name: date_scraping
+        description: Date d’extraction de l’annonce (jour de scraping)
+        tests:
+          - not_null
+
+
+  - name: mart_prix_moyen
+    description: >
+      Vue agrégée affichant le prix moyen au m² et la surface moyenne des logements à Rouen.
+    columns:
+      - name: city
+        description: Ville
+      - name: avg_price_m2
+        description: Prix moyen au m²
+      - name: avg_surface_m2
+        description: Surface moyenne des logements
+      - name: nb_annonces
+        description: Nombre total d’annonces dans la dernière extraction
+
+
+  - name: mart_evolution_prix
+    description: >
+      Suivi de l’évolution du prix moyen au m² au fil des semaines de scraping.
+    columns:
+      - name: date_scraping
+        description: Date du scraping (hebdomadaire)
+      - name: avg_price_m2
+        description: Prix moyen au m² à cette date
+      - name: avg_price
+        description: Loyer moyen total
+      - name: nb_annonces
+        description: Nombre d’annonces collectées à cette date
+
+
+  - name: mart_typologie_logement
+    description: >
+      Répartition du marché selon le nombre de pièces (studio, T2, T3...).
+    columns:
+      - name: nb_pieces
+        description: Nombre de pièces
+      - name: avg_price_m2
+        description: Prix moyen au m² pour cette typologie
+      - name: avg_rent
+        description: Loyer moyen pour cette typologie
+      - name: avg_surface
+        description: Surface moyenne
+
+
+  - name: mart_top_annonces
+    description: >
+      Liste des 20 annonces les plus abordables au m² selon le 20e percentile de prix.
+    columns:
+      - name: id_annonce
+        description: Identifiant de l’annonce
+      - name: title
+        description: Titre de l’annonce
+      - name: price_eur
+        description: Loyer mensuel
+      - name: surface_m2
+        description: Surface du logement
+      - name: price_m2
+        description: Prix au m²
+      - name: city
+        description: Ville
+      - name: date_scraping
+        description: Date du scraping
