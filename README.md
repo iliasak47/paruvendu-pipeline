@@ -2,40 +2,6 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Projet Data Engineering – Pipeline Immobilier ParuVendu</title>
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.6;
-      max-width: 1000px;
-      margin: auto;
-      padding: 24px;
-      color: #1f1f1f;
-      background-color: #ffffff;
-    }
-    h1, h2, h3 {
-      color: #1a2b3c;
-      margin-top: 32px;
-    }
-    pre, code {
-      background-color: #f6f8fa;
-      padding: 12px;
-      display: block;
-      overflow-x: auto;
-      font-size: 0.95em;
-    }
-    ul {
-      margin-left: 20px;
-    }
-    .stack span {
-      display: inline-block;
-      margin: 4px 6px 4px 0;
-      padding: 4px 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 0.85em;
-    }
-  </style>
 </head>
 
 <body>
@@ -78,6 +44,21 @@ Scraping
 <p>
 L’ensemble des traitements est orchestré par un DAG Airflow exécuté
 dans un environnement Dockerisé.
+</p>
+
+<h2>Rôle de dbt dans le pipeline</h2>
+
+<p>
+dbt est utilisé comme une <strong>couche de modélisation analytique</strong>
+au-dessus des données Gold produites par PySpark.
+</p>
+
+<p>
+Les transformations lourdes (scraping, parsing HTML, nettoyage avancé,
+normalisation et historisation) sont réalisées en amont avec PySpark.
+dbt intervient ensuite via <strong>AWS Athena</strong> afin de structurer les données
+selon des modèles analytiques, appliquer une logique métier légère
+et produire des tables prêtes à l’exploitation dans Power BI.
 </p>
 
 <h2>Stack technique</h2>
