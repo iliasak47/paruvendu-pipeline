@@ -37,7 +37,7 @@ with DAG(
         task_id="scrape",
         bash_command=(
             "python /opt/airflow/dags/scripts/S3_scrape_paruvendu.py "
-            "&& echo '✅ Scraping terminé avec succès.'"
+            "&& echo ' Scraping terminé avec succès.'"
         ),
     )
 
@@ -48,7 +48,7 @@ with DAG(
         task_id="parse",
         bash_command=(
             "python /opt/airflow/dags/scripts/S3_parse_paruvendu.py "
-            "&& echo '✅ Parsing terminé avec succès.'"
+            "&& echo ' Parsing terminé avec succès.'"
         ),
     )
 
@@ -59,7 +59,7 @@ with DAG(
         task_id="transform_gold",
         bash_command=(
             "python /opt/airflow/dags/scripts/S3_transform_paruvendu.py "
-            "&& echo '✅ Transformation Gold terminée avec succès.'"
+            "&& echo ' Transformation Gold terminée avec succès.'"
         ),
     )
 
@@ -70,7 +70,7 @@ with DAG(
         task_id="historize",
         bash_command=(
             "python /opt/airflow/dags/scripts/S3_historize_paruvendu.py "
-            "&& echo '✅ Historisation terminée avec succès.'"
+            "&& echo ' Historisation terminée avec succès.'"
         ),
     )
 
@@ -82,7 +82,7 @@ with DAG(
         bash_command=(
             "cd /opt/airflow/dags/dbt && "
             "dbt run --profiles-dir /opt/airflow/.dbt "
-            "&& echo '✅ dbt run terminé avec succès.'"
+            "&& echo ' dbt run terminé avec succès.'"
         ),
     )
 
@@ -91,7 +91,7 @@ with DAG(
         bash_command=(
             "cd /opt/airflow/dags/dbt && "
             "dbt test --profiles-dir /opt/airflow/.dbt "
-            "&& echo '✅ dbt test terminé avec succès.'"
+            "&& echo ' dbt test terminé avec succès.'"
         ),
     )
 

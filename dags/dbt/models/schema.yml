@@ -5,6 +5,11 @@ models:
     description: >
       Table de staging contenant les annonces extraites du site ParuVendu
       pour la ville de Rouen. Données brutes nettoyées et typées.
+    
+    tests:
+      - unique:
+          column_name: "id_annonce || '-' || CAST(date_scraping AS VARCHAR)"
+
     columns:
       - name: id_annonce
         description: Identifiant unique de l'annonce (non unique à cause de l'historisation)
@@ -50,7 +55,10 @@ models:
 
   - name: mart_prix_moyen
     description: >
-      Vue agrégée affichant le prix moyen au m² et la surface moyenne des logements à Rouen.
+        Vue agrégée affichant le prix moyen au m² et la surface moyenne
+        des logements par ville, calculés comme la moyenne des moyennes
+        hebdomadaires afin de donner un poids égal à chaque période
+        de scraping.
     columns:
       - name: city
         description: Ville
@@ -59,7 +67,7 @@ models:
       - name: avg_surface_m2
         description: Surface moyenne des logements
       - name: nb_annonces
-        description: Nombre total d’annonces dans la dernière extraction
+        description: Nombre total d’observations historisées utilisées dans le calcul
 
 
   - name: mart_evolution_prix
@@ -78,7 +86,9 @@ models:
 
   - name: mart_typologie_logement
     description: >
-      Répartition du marché selon le nombre de pièces (studio, T2, T3...).
+        Analyse du marché immobilier par typologie de logement (nombre de pièces).
+        Les indicateurs sont calculés sur l’ensemble de l’historique observé et sont
+        implicitement pondérés par la durée de présence des annonces.
     columns:
       - name: nb_pieces
         description: Nombre de pièces
@@ -92,7 +102,9 @@ models:
 
   - name: mart_top_annonces
     description: >
-      Liste des 20 annonces les plus abordables au m² selon le 20e percentile de prix.
+      Liste des annonces faisant partie des 20 % les moins chères au m²
+      sur l’ensemble de l’historique observé. Le seuil est calculé à partir
+      du 20e percentile du prix au m² sur toutes les dates de scraping.
     columns:
       - name: id_annonce
         description: Identifiant de l’annonce

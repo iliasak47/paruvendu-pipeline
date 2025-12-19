@@ -72,3 +72,8 @@ Plan_Autres/
 # Code not used
 ############################
 src/
+
+############################
+# Airflow sensitive config
+############################
+config/airflow.cfg

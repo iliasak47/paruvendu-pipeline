@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: paruvendu_history_source   # alias dbt (libre)
+    description: >
+      Historique des annonces immobilières ParuVendu.
+      Données historisées hebdomadairement par PySpark
+      à partir des snapshots Gold.
+
+    schema: paruvendu_athena          # Database Athena 
+
+    tables:
+      - name: paruvendu_history       # Nom de la table Athena
+        description: >
+          Table Athena pointant vers l’historique des annonces
+          stocké sur S3 (history/history.parquet).
