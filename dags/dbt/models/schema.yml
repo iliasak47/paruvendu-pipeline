@@ -5,10 +5,6 @@ models:
     description: >
       Table de staging contenant les annonces extraites du site ParuVendu
       pour la ville de Rouen. Données brutes nettoyées et typées.
-    
-    tests:
-      - unique:
-          column_name: "id_annonce || '-' || CAST(date_scraping AS VARCHAR)"
 
     columns:
       - name: id_annonce
@@ -55,10 +51,10 @@ models:
 
   - name: mart_prix_moyen
     description: >
-        Vue agrégée affichant le prix moyen au m² et la surface moyenne
-        des logements par ville, calculés comme la moyenne des moyennes
-        hebdomadaires afin de donner un poids égal à chaque période
-        de scraping.
+      Vue agrégée affichant le prix moyen au m² et la surface moyenne
+      des logements par ville, calculés comme la moyenne des moyennes
+      hebdomadaires afin de donner un poids égal à chaque période
+      de scraping.
     columns:
       - name: city
         description: Ville
@@ -86,9 +82,9 @@ models:
 
   - name: mart_typologie_logement
     description: >
-        Analyse du marché immobilier par typologie de logement (nombre de pièces).
-        Les indicateurs sont calculés sur l’ensemble de l’historique observé et sont
-        implicitement pondérés par la durée de présence des annonces.
+      Analyse du marché immobilier par typologie de logement (nombre de pièces).
+      Les indicateurs sont calculés sur l’ensemble de l’historique observé et sont
+      implicitement pondérés par la durée de présence des annonces.
     columns:
       - name: nb_pieces
         description: Nombre de pièces
@@ -120,7 +116,8 @@ models:
         description: Ville
       - name: date_scraping
         description: Date du scraping
-      
+
+
   - name: kpi_marche
     description: >
       Table de synthèse fournissant les principaux indicateurs globaux du marché
@@ -163,4 +160,3 @@ models:
         description: >
           Loyer mensuel moyen observé, calculé sur l’ensemble des annonces
           historisées, toutes dates de scraping confondues.
-

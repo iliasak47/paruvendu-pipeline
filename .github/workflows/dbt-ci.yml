@@ -10,18 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Récupération du code
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Setup Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
+      # 3. Installation dbt + adapter Athena
       - name: Install dbt
         run: |
+          pip install --upgrade pip
           pip install dbt-core dbt-athena-community
 
+      # 4. Configuration AWS (Athena + S3)
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -29,7 +34,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Create dbt profile
+      # 5. Création du profiles.yml pour dbt
+      - name: Create dbt profiles.yml
         run: |
           mkdir -p ~/.dbt
           cat <<EOF > ~/.dbt/profiles.yml
@@ -44,11 +50,14 @@ jobs:
                 work_group: ${{ vars.ATHENA_WORKGROUP }}
           EOF
 
+      # 6. Installation des dépendances dbt
       - name: dbt deps
-        run: dbt deps
+        run: dbt deps --project-dir dags/dbt
 
+      # 7. Compilation des modèles
       - name: dbt compile
-        run: dbt compile --target ci
+        run: dbt compile --project-dir dags/dbt --target ci
 
+      # 8. Tests 
       - name: dbt test
-        run: dbt test --target ci
+        run: dbt test --project-dir dags/dbt --target ci
