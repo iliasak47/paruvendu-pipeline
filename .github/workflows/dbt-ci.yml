@@ -58,7 +58,8 @@ jobs:
       # 7. Compilation des modèles
       - name: dbt compile
         run: dbt compile --project-dir dags/dbt --target ci
+      
+      # 8. Run et test
+      - name: dbt build
+        run: dbt build --project-dir dags/dbt --target ci
 
-      # 8. Tests 
-      - name: dbt test
-        run: dbt test --project-dir dags/dbt --target ci
