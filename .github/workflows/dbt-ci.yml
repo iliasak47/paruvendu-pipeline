@@ -46,6 +46,7 @@ jobs:
                 type: athena
                 s3_staging_dir: s3://${{ vars.S3_STAGING_DIR }}
                 region_name: ${{ vars.AWS_REGION }}
+                schema: ci_paru_vendu
                 database: ${{ vars.ATHENA_DATABASE }}
                 work_group: ${{ vars.ATHENA_WORKGROUP }}
           EOF
