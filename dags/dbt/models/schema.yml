@@ -120,3 +120,47 @@ models:
         description: Ville
       - name: date_scraping
         description: Date du scraping
+      
+  - name: kpi_marche
+    description: >
+      Table de synthèse fournissant les principaux indicateurs globaux du marché
+      immobilier observé. Les KPI sont calculés sur l’ensemble des annonces
+      historisées, toutes dates de scraping confondues. Cette table permet
+      d’obtenir une vision macro du marché (prix, surface, volume d’annonces),
+      pondérée par la durée de visibilité des annonces.
+
+    columns:
+      - name: last_scraping
+        description: >
+          Date de scraping la plus récente présente dans l’historique.
+          Représente la dernière mise à jour des données.
+
+      - name: total_annonces
+        description: >
+          Nombre total d’observations historisées utilisées pour le calcul
+          des indicateurs. Une même annonce peut être comptée plusieurs fois
+          si elle apparaît à différentes dates de scraping.
+
+      - name: avg_price_m2
+        description: >
+          Prix moyen au mètre carré calculé sur l’ensemble des annonces
+          historisées, toutes dates confondues.
+
+      - name: min_price_m2
+        description: >
+          Prix au mètre carré le plus bas observé dans l’historique des annonces.
+
+      - name: max_price_m2
+        description: >
+          Prix au mètre carré le plus élevé observé dans l’historique des annonces.
+
+      - name: avg_surface
+        description: >
+          Surface moyenne des logements observés, calculée sur l’ensemble
+          de l’historique des annonces.
+
+      - name: avg_rent
+        description: >
+          Loyer mensuel moyen observé, calculé sur l’ensemble des annonces
+          historisées, toutes dates de scraping confondues.
+

@@ -14,9 +14,5 @@ FROM {{ source('paruvendu_history_source', 'paruvendu_history') }}
 WHERE price_eur IS NOT NULL
   AND surface_m2 > 0;
 
--- Cette étape permet de vérifier et normaliser les données avant leur utilisation :
--- - les types de données sont appropriés (numérique, texte, date, etc.)
--- - les noms des colonnes sont cohérents et explicites
--- - des règles de validation minimales sont respectées (ex : surface > 0)
--- - chaque champ a une signification claire et sans ambiguïté
+
 
