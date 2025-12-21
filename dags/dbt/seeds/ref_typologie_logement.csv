@@ -1,0 +1,6 @@
+nb_pieces,label_typologie,description
+1,Studio,Logement d'une seule pièce
+2,T2,Deux pièces principales
+3,T3,Trois pièces principales
+4,T4,Quatre pièces principales
+5,T5 et plus,Logement de grande surface
