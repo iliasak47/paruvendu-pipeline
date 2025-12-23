@@ -1,3 +1,5 @@
+-- depends_on: {{ ref('stg_paruvendu') }}
+
 {{ config(materialized='view') }}
 
 WITH stats AS (

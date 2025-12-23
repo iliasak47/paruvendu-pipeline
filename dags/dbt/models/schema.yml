@@ -20,14 +20,16 @@ models:
         tests:
           - not_null
           - dbt_expectations.expect_column_values_to_be_between:
-              min_value: 0
+              arguments:
+                min_value: 0
 
       - name: surface_m2
         description: Surface du logement en mètres carrés
         tests:
           - not_null
           - dbt_expectations.expect_column_values_to_be_between:
-              min_value: 5
+              arguments:
+                min_value: 5
 
       - name: nb_pieces
         description: Nombre de pièces principales
@@ -160,3 +162,17 @@ models:
         description: >
           Loyer mensuel moyen observé, calculé sur l’ensemble des annonces
           historisées, toutes dates de scraping confondues.
+
+
+seeds:
+  - name: ref_typologie_logement
+    description: >
+      Table de référence décrivant la typologie des logements
+      en fonction du nombre de pièces.
+    columns:
+      - name: nb_pieces
+        description: Nombre de pièces
+      - name: label_typologie
+        description: Libellé métier de la typologie
+      - name: description
+        description: Description textuelle de la typologie

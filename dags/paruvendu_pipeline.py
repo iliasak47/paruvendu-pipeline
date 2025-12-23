@@ -75,8 +75,17 @@ with DAG(
     )
 
     # -----------------------------------------------------------------
-    # 5. Modélisation et tests dbt sur Athena
+    # 5. Modélisation, tests et freshness de données dbt sur Athena
     # -----------------------------------------------------------------
+    dbt_freshness = BashOperator(
+        task_id="dbt_freshness",
+        bash_command=(
+            "cd /opt/airflow/dags/dbt && "
+            "dbt source freshness --profiles-dir /opt/airflow/.dbt "
+            "&& echo ' dbt source freshness terminé avec succès.'"
+        ),
+    )
+
     dbt_run = BashOperator(
         task_id="dbt_run",
         bash_command=(
@@ -98,4 +107,4 @@ with DAG(
     # -----------------------------------------------------------------
     # DÉPENDANCES ENTRE LES TÂCHES
     # -----------------------------------------------------------------
-    scrape >> parse >> transform_gold >> historize >> dbt_run >> dbt_test
+    scrape >> parse >> transform_gold >> historize >> dbt_freshness >> dbt_run >> dbt_test

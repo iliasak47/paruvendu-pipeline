@@ -29,7 +29,6 @@ dags/dbt/dbt_packages/
 # Data (NEVER commit data)
 ############################
 data/
-*.csv
 *.parquet
 *.json
 *.html
