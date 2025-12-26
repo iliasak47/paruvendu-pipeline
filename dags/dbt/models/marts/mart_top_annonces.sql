@@ -1,6 +1,6 @@
 -- depends_on: {{ ref('stg_paruvendu') }}
 
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 WITH stats AS (
     SELECT
